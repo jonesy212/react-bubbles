@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axiosWithAuth  from '../Utils';
+import {axiosWithAuth}  from '../Utils';
 
 const initialColor = {
   color: "",
@@ -21,19 +21,26 @@ const ColorList = ({ colors, updateColors }) => {
       // Make a put request to save your updated color
       // think about where will you get the id from...
       // where is it saved right now?
-      axiosWithAuth
-      .put(`http://localhost:5000/api/colors/id`)
-      .then(res => setEditing(res.data))
+      axiosWithAuth()
+      .put(`http://localhost:5000/api/colors/${colorToEdit.id}`, colorToEdit)
+      
       .catch(error => console.log(error.response))
   };
 
   const deleteColor = color => {
     // make a delete request to delete this color
-    axiosWithAuth.delete(`http://localhost:5000/api/colors/id`)
-    .then(res =>setColorToEdit(res.data))
+    axiosWithAuth()
+    .delete(`http://localhost:5000/api/colors/${color.id}`)
+    
     .catch(error =>console.log(error.res))
+    window.location.reload()
 
   };
+
+  // const addColor = color ={
+  //   axiosWithAuth()
+  //   .post('http://localhost:5000/api/colors/')
+  // }
 
   return (
     <div className="colors-wrap">
@@ -89,5 +96,48 @@ const ColorList = ({ colors, updateColors }) => {
     </div>
   );
 };
+
+
+
+
+// const LoginForm = ({touched, errors}) => {
+//   // make a post request to retrieve a token from the api
+//    // when you have handled the token, navigate to the BubblePage route
+  
+//    return (
+//        <div className='login-form'>
+//            <form>
+//                <input 
+//                    className='username'
+//                    type= 'text'
+//                    name= 'username'
+//                    placeholder ='Username'
+//                />
+//                {touched.username && errors.username && (
+//                    <p className= 'error'>{errors.username}</p>
+//                )}
+//                <input 
+//                    className='password'
+//                    type= 'password'
+//                    name= 'password'
+//                    placeholder ='Password'
+//                />
+//                {touched.password && errors.password && (
+//                    <p className= 'error'>{errors.password}</p>
+//                )}
+//              <button type ='submit'>Add</button>
+//            </form>
+
+
+// handleSubmit(addBubble){
+//   axios
+//   .post('http://localhost:5000/api/login', addBubble)
+//   .then(res => {
+//       console.log(res)
+//       localStorage.setItem('token', res.data.payload)
+//       formikBag.props.history.push('/BubblesPage')
+//   })
+//   .catch(error => console.log(error.res))
+// }
 
 export default ColorList;

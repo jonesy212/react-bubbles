@@ -11,13 +11,15 @@ function App() {
   const [colorList, setColorList] = useState([]);
   return (
     <Router>
+      
       <div className="App">
-        <Route exact path="/login" component={Login} />
+        <Route exact path="/" component={Login} />
         {/* 
           Build a PrivateRoute component that will 
           display BubblePage when you're authenticated 
         */}
-        <PrivateRoute path = '/bubbles' component={BubblePage}/>
+        <PrivateRoute exact path = '/BubblesPage' component={BubblePage}/>
+        
       </div>
     </Router>
   );

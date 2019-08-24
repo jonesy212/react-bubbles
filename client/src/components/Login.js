@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react'
+import React from 'react'
 import axios from 'axios'
 import {Form, Field, withFormik} from 'formik'
 import * as Yup from 'yup'
 
 
-const LoginForm = ({errors,touched}) => {
+const LoginForm = ({touched, errors}) => {
  // make a post request to retrieve a token from the api
   // when you have handled the token, navigate to the BubblePage route
  
@@ -48,20 +48,24 @@ export default withFormik({
               password: password || ''
           }
       },
-      validationSchema: Yup.object.shape({
-          username: Yup.string().required('Please enter your username'),
-          password: Yup.string().required('Please enter your password')
+
+        validationSchema: Yup.object().shape({
+        username: Yup.string().required('Please enter your username'),
+        password: Yup.string().required('Please enter your password')
       }),
+      
       
       handleSubmit(values, formikBag){
         axios
-        .post(`http://localhost:5000/api/colors/login`, values)
+        .post('http://localhost:5000/api/login', values)
         .then(res => {
             console.log(res)
-            localStorage.setItem('token',res.data.payload)
-            formikBag.  this.history.push('/colors');
+            localStorage.setItem('token', res.data.payload)
+            formikBag.props.history.push('/BubblesPage')
         })
         .catch(error => console.log(error.res))
       }
+      
+      
     
   })(LoginForm)
